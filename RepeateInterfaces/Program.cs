@@ -1,4 +1,148 @@
-﻿IMovable tom = new Person();
+﻿IMovable tom = new Person("Tom");
+tom.MoveEvent += () => Console.WriteLine($"{tom.Name} is moving");
+tom.Move();
+
+interface IMovable
+{
+    protected internal void Move();
+    protected internal string Name { get; }
+    delegate void MoveHandler();
+
+    protected internal event MoveHandler MoveEvent;
+}
+
+class Person : IMovable
+{
+    private string name;
+    private IMovable.MoveHandler? moveEvent;
+    event IMovable.MoveHandler IMovable.MoveEvent
+    {
+        add => moveEvent += value;
+        remove => moveEvent -= value;
+    }
+    
+    string IMovable.Name { get => name; }
+    public Person(string name) => this.name = name;
+
+    void IMovable.Move()
+    {
+        Console.WriteLine($"{name} is walking");
+        moveEvent?.Invoke();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*HeroAction heroAction = new HeroAction();
+BaseAction baseAction = new BaseAction();
+
+baseAction.Move();
+heroAction.Move();
+
+interface IAction
+{
+    void Move();
+}
+
+class BaseAction : IAction
+{
+    public void Move() => Console.WriteLine("Move in BaseAction");
+}
+
+class HeroAction : BaseAction, IAction
+{
+    public void Move() => Console.WriteLine("Move in HeroAction");
+}*/
+
+
+
+/*Person tom = new Person();
+
+((ISchool)tom).Study();
+((IUniversity)tom).Study();
+
+class Person : ISchool, IUniversity
+{
+    //public void Study() => Console.WriteLine("Studying at school or university");
+    void ISchool.Study() => Console.WriteLine("Studying at school");
+    void IUniversity.Study() => Console.WriteLine("Studying at university");
+}
+
+interface ISchool
+{
+    void Study();
+}
+
+interface IUniversity
+{
+    void Study();
+}*/
+
+
+
+/*BaseAction baseAction1 = new BaseAction();
+IAction baseAction2 = new BaseAction();
+
+if (baseAction1 is IAction action) action.Move();
+baseAction2.Move();
+
+interface IAction
+{
+    void Move();
+}
+
+class BaseAction : IAction
+{
+    void IAction.Move() => Console.WriteLine("Move in base Class");
+}*/
+
+
+
+/*Message hello = new Message("Hello bro");
+hello.Print();
+
+IMessage message = new Message("Hello Brush");
+Console.WriteLine(message.Text);
+
+if (hello is Message someMessage) someMessage.Print();
+
+interface IMessage
+{
+    string Text { get; set; }
+}
+
+interface IPrintable
+{
+    void Print();
+}
+
+class Message : IMessage, IPrintable
+{
+    public string Text { get; set; }
+    public Message(string text) => Text = text;
+    public void Print() => Console.WriteLine(Text);
+}*/
+
+
+
+/*IMovable tom = new Person();
 Car tesla = new Car();
 
 tom.Move();
@@ -14,17 +158,7 @@ class Person : IMovable { }
 struct Car : IMovable
 {
     public void Move() => Console.WriteLine("Driving");
-}
-
-
-
-
-
-
-
-
-
-
+}*/
 
 
 
@@ -48,7 +182,7 @@ class Person : IMovable
 
 struct Car : IMovable
 {
-    public void Move() => Console.WriteLine("Car edet");
+    public void Move() => Console.WriteLine("Car driving");
 }*/
 
 
@@ -60,12 +194,12 @@ struct Car : IMovable
 
 struct Car : IMovable
 {
-    public void Move() => Console.WriteLine("Car edet")
+    public void Move() => Console.WriteLine("Car driving")
 }*/
 
 
 
-/*public interface Imovable
+/*public interface IMovable
 {
     public const int minSpeed = 0;
     public const int maxSpeed = 60;
