@@ -1,4 +1,38 @@
-﻿IMovable tom = new Person("Tom");
+﻿
+
+interface IMovable
+{
+    void Move();
+}
+
+abstract class Person : IMovable
+{
+    public abstract void Move();
+}
+
+class Driver : Person
+{
+    public override void Move() => Console.WriteLine("Driver drive a car");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*IMovable tom = new Person("Tom");
 tom.MoveEvent += () => Console.WriteLine($"{tom.Name} is moving");
 tom.Move();
 
@@ -29,24 +63,7 @@ class Person : IMovable
         Console.WriteLine($"{name} is walking");
         moveEvent?.Invoke();
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}*/
 
 
 
